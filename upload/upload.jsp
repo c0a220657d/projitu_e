@@ -8,7 +8,7 @@
 </head>
 <body>
 	<%--適宜，パスを変更してください--%>
-<form method="POST" enctype="multipart/form-data"action="/2022g15/upload/UploadServlet">
+<form method="POST" enctype="multipart/form-data"action="/2024e/upload/UploadServlet">
 <input type="file" name="file"/><br />
 <input type="submit" value="アップロード" />
 </form>

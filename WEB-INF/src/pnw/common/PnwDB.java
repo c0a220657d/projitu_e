@@ -32,8 +32,8 @@ public class PnwDB {
      * @param db 接続するDB名
      */
     public PnwDB(String db) {
-        this.db_id = "root";
-        this.db_password = "";
+        this.db_id = "2024e";
+        this.db_password = "2024e";
         try {
             // Java->MySQLへお話をするための準備
             Class.forName("com.mysql.cj.jdbc.Driver");

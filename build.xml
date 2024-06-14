@@ -15,13 +15,13 @@
 
   <!--valueのところに，グループ名(a~nのどれか)を定義してください!!-->
   <!--グループメンバーどうしで確認しあって下さい-->
-  <property name="GNO" value=""/>
+  <property name="GNO" value="e"/>
   
 	<!-- ユーザ名.つまり，@edu.teu.ac.jpの@より前の部分-->
-	<property name="scp.user" value=""/>
+	<property name="scp.user" value="2024e"/>
 	<!-- パスワード-->
 	<!-- パスワードに＆がある場合は，＆→&amp;　にしてください．-->
-	<property name="scp.pass" value=""/>
+	<property name="scp.pass" value="2024e"/>
 	<property name="scp.server" value="pnw.cloud.cs.priv.teu.ac.jp"/> 
 
 
@@ -84,12 +84,12 @@
   </target>
 
   <target name="localcopy" depends="war">
-		<copy file="${dist}/2023g${GNO}.war" todir="${TOMCAT_HOME}/webapps/"/>
-  <echo message="tomcat再起動後，http://localhost:8080/2023g${GNO}/...でアクセスしてください．"/>
+		<copy file="${dist}/2024g${GNO}.war" todir="${TOMCAT_HOME}/webapps/"/>
+  <echo message="tomcat再起動後，http://localhost:8080/2024g${GNO}/...でアクセスしてください．"/>
   </target>
   
   <target name="scp" depends="war">
-		<scp file="${dist}/2023g${GNO}.war" todir="${scp.user}:${scp.pass}@${scp.server}:/opt/tomcat/apache-tomcat-9.0.45/webapps/2024${GNO}.war" port="22" trust="yes" />
+		<scp file="${dist}/2024${GNO}.war" todir="${scp.user}:${scp.pass}@${scp.server}:/opt/tomcat/apache-tomcat-9.0.45/webapps/2024${GNO}.war" port="22" trust="yes" />
   <echo message="転送後，10秒ほど待ってから，http://${scp.server}:8080/2024${GNO}/...でアクセスしてください．"/>
   </target>
 	<tstamp>

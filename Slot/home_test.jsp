@@ -104,6 +104,7 @@
         <div class="sidebar" id="mySidebar">
             <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
             <h1>マイページ</h1>
+        <a href="ranking.jsp">ランキング</a>
         <a href="shop_buy.jsp">アイテム販売</a>
         <a href="shop_sell.jsp">アイテム購入</a>
         <a href="use_item.jsp">所持アイテム</a>
@@ -137,8 +138,8 @@
                         <p>アイテムを購入しましょう。</p>
                     </div>
                     <div class="grid-item">
-                        <a href="ranking.jsp" class="button">ランキング</a>
-                        <p>自分のランキングを確認してみよう！</p>
+                        <a href="user_entry.jsp" class="button">ユーザ登録</a>
+                        <p>新規ユーザーはこちらから。</p>
                     </div>
                 </div>
             </div>

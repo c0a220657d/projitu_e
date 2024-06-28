@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.w3c.dom.Text;
+
 import pnw.common.PnwDB;
 
 import javax.servlet.RequestDispatcher;
@@ -37,7 +39,8 @@ public class ShopListShowServlet extends HttpServlet {
         response.setContentType("text/html; charset=UTF-8");
 
         ResultSet rs;
-        String forwardURL = "/Slot/shop.jsp";
+        ResultSet item_rs;
+        String forwardURL = "/Slot/shop_buy.jsp";
         /**
          * Point: リクエストからセッションを取得するように埋めて下さい．
          */
@@ -55,7 +58,9 @@ public class ShopListShowServlet extends HttpServlet {
             PnwDB db = new PnwDB("2024e");
             
             String sql = "SELECT * FROM shop_db";
+            String item_sql = "SELECT item_name FROM item_db WHERE item_id = ?";
             PreparedStatement stmt = db.getStmt(sql);
+            PreparedStatement item_stmt = db.getStmt(item_sql);
 
             // 実行結果取得
             rs = stmt.executeQuery();
@@ -68,14 +73,25 @@ public class ShopListShowServlet extends HttpServlet {
                 int itemid = rs.getInt("item_id");
                 int itemprice = rs.getInt("item_price");
                 int goodsid = rs.getInt("goods_id");
-                System.out.println(id);
                 // beanを生成
                 ShopInfoBean bean = new ShopInfoBean(id,itemid,itemprice,goodsid);
+                //item_rs = item_stmt.executeQuery(item_sql);
+                //System.out.println("aaaaaaaaaaaaaaa");
                 // bean.setID(id);
                 // Listへbeanを追加する．
                 infoArray.add(bean);
                 // 見つかった
                 cnt++;
+            }
+            for (ShopInfoBean info : infoArray) {
+                item_stmt.setInt(1,info.getItemID());
+                System.out.println(info.getItemID());
+                item_rs = item_stmt.executeQuery();
+                while (item_rs.next()) {
+                    String item_name = item_rs.getString("item_name");
+                    info.setItemName(item_name);
+                }
+                
             }
             /**
              * Point: sessionへ，userlistという名前でinfoArrayをセットしてください．
@@ -102,5 +118,6 @@ public class ShopListShowServlet extends HttpServlet {
         // TODO Auto-generated method stub
         doGet(request, response);
     }
+
 
 }

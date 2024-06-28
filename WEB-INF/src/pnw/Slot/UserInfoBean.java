@@ -1,37 +1,22 @@
 package pnw.Slot;
 
-public class ShopInfoBean {
+public class UserInfoBean {
 
     private int userID;
-    private int itemID;
-    private int itemPrice;
-    private int goodsID;
-    private String item_name;
+    private int score;
 
-    public ShopInfoBean(int userID,int itemID,int itemPrice,int goodsID) {
+    public UserInfoBean(int userID) {
         this.userID = userID;
-        this.itemID = itemID;
-        this.itemPrice = itemPrice;
-        this.goodsID = goodsID;
     }
 
     public int getUserID() {
         return userID;
     }
-    public int getItemID() {
-        return itemID;
+    public int getScore() {
+        return score;
     }
-    public int getItemPrice() {
-        return itemPrice;
-    }
-    public int getGoodsID() {
-        return goodsID;
-    }
-    public String getItemName(){
-        return item_name;
-    }
-    public void setItemName(String name){
-        this.item_name = name;
+    public void setScore(int score){
+        this.score = score;
     }
 
     // public void setUserID(String userID) {

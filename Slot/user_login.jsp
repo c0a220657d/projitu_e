@@ -17,30 +17,34 @@
             }
             .login-container {
                 background-color: #fff;
-                padding: 20px;
+                padding: 40px; /* パディングを増やす */
                 border-radius: 5px;
                 box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                width: 400px; /* 幅を広げる */
             }
             .login-container h2 {
-                margin-bottom: 20px;
+                margin-bottom: 30px; /* マージンを増やす */
             }
             .login-container input {
                 display: block;
                 width: 100%;
-                padding: 10px;
-                margin: 10px 0;
+                padding: 15px; /* パディングを増やす */
+                margin: 15px 0; /* マージンを増やす */
                 border-radius: 5px;
                 border: 1px solid #ddd;
+                font-size: 16px; /* フォントサイズを増やす */
             }
             .login-container button {
                 display: block;
                 width: 100%;
-                padding: 10px;
+                padding: 15px; /* パディングを増やす */
                 background-color: #4CAF50;
                 color: white;
                 border: none;
                 border-radius: 5px;
                 cursor: pointer;
+                font-size: 16px; /* フォントサイズを増やす */
+                margin-top: 15px; /* ボタン間のマージンを確保 */
             }
             .login-container button:hover {
                 background-color: #45a049;
@@ -51,8 +55,8 @@
         <div class="login-container">
             <h2>ユーザログイン</h2>
             <form action="LoginServlet" method="post">
-                <input type="text" name="userId" placeholder="ユーザID" required>
-                <input type="password" name="password" placeholder="パスワード" required>
+                <input type="text" name="userID" placeholder="ユーザID" required>
+                <input type="password" name="Password" placeholder="パスワード" required>
                 <button type="submit">ログイン</button>
             </form>
             <form action="user_entry.jsp" method="get">

@@ -27,7 +27,7 @@
         let intervals = [];
         let numbers = [1, 1, 1];
         let money = 200;
-        
+        let move = [false, false, false];
 
         function updateMoney() {
             document.getElementById('money').innerText = money;
@@ -49,7 +49,10 @@
 
         function stopSlot(index) {
             clearInterval(intervals[index]);
-            checkMatch();
+            move[index] = false;
+            if (!move[0] && !move[1] && !move[2]) {
+                checkMatch();
+            }
         }
 
         function checkMatch() {
@@ -63,20 +66,27 @@
         }
 
         function startSlots() {
-            if (money >= 20) {
-                money -= 20;
-                updateMoney();
-                for (let i = 0; i < 3; i++) {
-                    startSlot(i);
+            if (!move[0] && !move[1] && !move[2]){
+                if (money >= 20) {
+                    money -= 20;
+                    updateMoney();
+                    for (let i = 0; i < 3; i++) {
+                        startSlot(i);
+                        move[i] = true;
+                    }
+                } else {
+                    alert("所持金が足りません。");
                 }
-            } else {
-                alert("所持金が足りません。");
+            }else {
+                alert("すべてのスロットを止めてください。");
             }
         }
 
         function stopSlots() {
             for (let i = 0; i < 3; i++) {
-                stopSlot(i);
+                if (move[i]) {
+                    stopSlot(i);
+                }
             }
         }
 
@@ -104,8 +114,11 @@
         <button class="control" onclick="stopSlot(1)">ストップ2</button>
         <button class="control" onclick="stopSlot(2)">ストップ3</button>
     </div>
+    <a href="home.jsp">Home</a>
 </body>
 </html>
+
+
 
 
 

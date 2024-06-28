@@ -1,13 +1,52 @@
-<!DOCTYPE html>
-<%@ page contentType="text/html; charset=UTF-8" %>
-<html lang="ja">
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ page import="java.util.*, pnw.Slot.*"%>
+<html>  
     <head>
-        <meta charset= "utf-8">
-        <title>buy</title>
-        <link href="">
-    </head>
-    <body>
-        しょっぷbuy
-        <a href="home.jsp">home</a>
-    </body>
+        <meta charset="UTF-8">
+        <title>shop</title>
+    </head>      
+<body>
+<h1>shop</h1>
+<table border="1">
+<tr>
+    <td>UserID</td>
+    <td>ItemID</td>
+    <td>ItemPrice</td>
+    <td>ItemName</td>
+</tr>
+<%
+ArrayList<ShopInfoBean> list = (ArrayList<ShopInfoBean>)request.getAttribute("shoplist");
+Iterator<ShopInfoBean> ite = list.iterator();
+%>
+<h1><%=list.get(0)%></h1>
+//結果の表示
+<%
+while(ite.hasNext()){
+    //Point: Iteratorの次の要素をbeanへ格納させてください．
+    ShopInfoBean bean = ite.next();
+%>
+    <tr>
+    <td><%=bean.getUserID()%></td>
+    <td><%=bean.getItemID()%></td>
+    <td><%=bean.getItemPrice()%></td>
+    <td><%=bean.getItemName()%></td>
+    </tr>
+<%
+}
+%>
+</table>
+<hr/>
+追加の場合は,IDは自動設定されるので指定しないでください．
+更新と削除は，ID指定が必須．
+<!-- <form action="./ShopListProcessServlet" method="post">
+ID: <input type="text" name="id"><br>
+ユーザ名：<input type="text" name="userid" ><br>
+パスワード：<input type="password" name="pass" ><br>
+<input type="submit" name="btn" value="追加">
+<input type="submit" name="btn" value="更新">
+<input type="submit" name="btn" value="削除">
+</form> -->
+<a href="home.jsp">戻る</a>
+</body>
 </html>

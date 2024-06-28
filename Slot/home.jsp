@@ -42,6 +42,9 @@
                 padding-top: 60px;
                 z-index: 1;
             }
+            .sidebar h1 {
+                color: white; 
+            }
             .sidebar a {
                 padding: 10px 15px;
                 text-decoration: none;
@@ -118,7 +121,7 @@
                 <div class="mypage-icon" onclick="openNav()">☰</div>
             </header>
             <div class="container">
-                <h2>ようこそ、ゲストさん！</h2>
+                <h2>ようこそ、 <%= session.getAttribute("UID")%>さん！</h2>
                 <p>ここはホームページのメインコンテンツです。</p>
             </div>
             <div class="container">
@@ -133,7 +136,7 @@
                         <p>素敵なアイテムをゲット！</p>
                     </div>
                     <div class="grid-item">
-                        <a href="shop.jsp" class="button">ショップ</a>
+                        <a href="ShopListShowServlet" class="button">ショップ</a>
                         <p>アイテムを購入しましょう。</p>
                     </div>
                     <div class="grid-item">

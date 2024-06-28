@@ -13,18 +13,18 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet("/Slot/UserEntryServlet")
-public class UserEntryServlet extends HttpServlet {
+@WebServlet("/Slot/SlotServlet")
+public class SlotServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
 
-        String userName = request.getParameter("userName");
-        String password = request.getParameter("password");
-        //String dateBirth = request.getParameter("dateBirth");
-
+        String btn_val = request.getParameter("Plus");
+        // String userName = request.getParameter("userName");
+        // String password = request.getParameter("password");
+        // String dateBirth = request.getParameter("dateBirth");
 
         PreparedStatement pstmt = null;
 
@@ -42,8 +42,6 @@ public class UserEntryServlet extends HttpServlet {
             // SQL文の作成
             String sql = "INSERT INTO user_management (user_name, password) VALUES (?, ?)";
             pstmt = db.getStmt(sql);
-            pstmt.setString(1, userName);
-            pstmt.setString(2, password);
             //pstmt.setString(3, dateBirth);
 
             // SQLの実行

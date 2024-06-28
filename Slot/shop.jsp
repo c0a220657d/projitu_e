@@ -10,9 +10,10 @@
 <h1>shop</h1>
 <table border="1">
 <tr>
-    <td>ID</td>
     <td>UserID</td>
-    <td>Password</td>
+    <td>ItemID</td>
+    <td>ItemPrice</td>
+    <td>ItemName</td>
 </tr>
 <%
 ArrayList<ShopInfoBean> list = (ArrayList<ShopInfoBean>)request.getAttribute("shoplist");
@@ -20,6 +21,7 @@ Iterator<ShopInfoBean> ite = list.iterator();
 %>
 <h1><%=list.get(0)%></h1>
 //結果の表示
+<%
 while(ite.hasNext()){
     //Point: Iteratorの次の要素をbeanへ格納させてください．
     ShopInfoBean bean = ite.next();
@@ -28,7 +30,7 @@ while(ite.hasNext()){
     <td><%=bean.getUserID()%></td>
     <td><%=bean.getItemID()%></td>
     <td><%=bean.getItemPrice()%></td>
-    <td><%=bean.getGoodsID()%></td>
+    <td><%=bean.getItemName()%></td>
     </tr>
 <%
 }

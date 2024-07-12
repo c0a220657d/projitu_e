@@ -1,4 +1,6 @@
-<%@ page contentType="text/html; charset=UTF-8" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ page import="java.util.*, pnw.Slot.*"%>
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
@@ -55,33 +57,33 @@
     <h1>あなたの得点: 1000</h1>
     
     <h2>ランキング</h2>
-    <table>
-        <thead>
+    <table border="1">
+        <tr>
+            <td> 順位 </td>
+            <td>UserID</td>
+            <td>Point</td>
+        </tr>
+        <%
+        ArrayList<UserPointBean> list = (ArrayList<UserPointBean>)session.getAttribute("userlist");
+        Iterator<UserPointBean> ite = list.iterator();
+        int num = 1 ;
+        //結果の表示
+        while(ite.hasNext()){
+            UserPointBean bean = ite.next();
+        %>
+        <%-- HTML内にJSPコードをスクリプト式として埋め込む--%>
             <tr>
-                <th>順位</th>
-                <th>ユーザー名</th>
-                <th>得点</th>
+            <td><%=num %></td>
+            <td><%=bean.getID()%></td>
+            <td><%=bean.getpoint()%></td>
             </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>1</td>
-                <td>a</td>
-                <td>2000</td>
-            </tr>
-            <tr>
-                <td>2</td>
-                <td>b</td>
-                <td>1500</td>
-            </tr>
-            <tr>
-                <td>3</td>
-                <td>c</td>
-                <td>1000</td>
-            </tr>
-        </tbody>
-    </table>
+        <%
+        num += 1; 
+        }
+        %>
+        </table>
     
     <a href="home.jsp">home</a>
 </body>
 </html>
+

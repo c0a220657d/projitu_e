@@ -22,64 +22,70 @@ import javax.servlet.RequestDispatcher;
 @WebServlet("/Slot/LoginServlet")
 public class LoginServlet extends HttpServlet {
 
-	/**
-	 * @see HttpServlet#HttpServlet()
-	 */
-	public LoginServlet() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public LoginServlet() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		response.setContentType("text/html; charset=UTF-8");
-		String user_id = request.getParameter("userID");
-		String password = request.getParameter("Password");
-		String forwardURL = "user_login.jsp";
+    /**
+     * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+     *      response)
+     */
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        response.setContentType("text/html; charset=UTF-8");
+        String User_name = request.getParameter("Username");
+        String password = request.getParameter("Password");
+        String forwardURL = "/Slot/user_login.jsp";
 
-		ResultSet rs;
+        ResultSet rs;
         HttpSession session = request.getSession();
 
-		try {
-			PnwDB db = new PnwDB("2024e");
-			String sql = "SELECT * FROM userinfo where userid=?";
-			PreparedStatement stmt = db.getStmt(sql);
-			stmt.setInt(1, Integer.parseInt(user_id));
-			// 実行結果取得
-			rs = stmt.executeQuery();
-			//String id = rs.getString("userid");
-			String pass = rs.getString("password");
-			if (password.equals(pass)) {
-                session.setAttribute("UID",user_id);
-				forwardURL = "home.jsp";
-			} else {
-                response.sendRedirect("user_entry_failure.jsp");
-			}
+        try {
+            PnwDB db = new PnwDB("2024e");
+            String sql = "SELECT user_name, password FROM user_management WHERE user_name=?";
+            PreparedStatement stmt = db.getStmt(sql);
+            stmt.setString(1, User_name);
+            // 実行結果取得
+            rs = stmt.executeQuery();
 
-		} catch (Exception e) {
-			e.printStackTrace();
-            response.sendRedirect("user_entry_failure.jsp");
-		}
+            if (rs.next()) {
+                String dbPassword = rs.getString("password");
+                if (password.equals(dbPassword)) {
+					session.setAttribute("UName", rs.getString("user_name"));
+                    forwardURL = "home.jsp"; // ログイン成功後のページ
+                } else {
+                    forwardURL = "user_entry_failure.jsp"; // パスワードが間違っている場合のページ
+                }
+            } else {
+                forwardURL = "user_entry_failure.jsp"; // ユーザーが見つからない場合のページ
+            }
 
-		// 外部ファイルに転送する準備
-		RequestDispatcher dispatcher = request.getRequestDispatcher(forwardURL);
-		// 外部ファイルに表示処理を任せる
-		dispatcher.forward(request, response);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            forwardURL = "user_entry_failure.jsp"; // データベースエラーの場合のページ
+        } catch (Exception e) {
+            e.printStackTrace();
+            forwardURL = "user_entry_failure.jsp"; // その他のエラーの場合のページ
+        }
 
-	}
+        // 外部ファイルに転送する準備
+        RequestDispatcher dispatcher = request.getRequestDispatcher(forwardURL);
+        // 外部ファイルに表示処理を任せる
+        dispatcher.forward(request, response);
+    }
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
-	}
+    /**
+     * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+     *      response)
+     */
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        // TODO Auto-generated method stub
+        doGet(request, response);
+    }
 
 }

@@ -1,4 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ page import="java.util.*, pnw.Slot.*"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -20,6 +22,20 @@
         }
         .control {
             margin: 0 10px;
+        }
+        a {
+            display: block;
+            width: 100px;
+            text-align: center;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: #fff;
+            text-decoration: none;
+            margin: 20px auto;
+            border-radius: 5px;
+        }
+        a:hover {
+            background-color: #4CAF50;
         }
     </style>
     <script>

@@ -1,12 +1,15 @@
 <!DOCTYPE html>
 <%@ page contentType="text/html; charset=UTF-8" %>
+<%@ page import="java.util.*, pnw.Slot.*"%>
 <html lang="ja">
     <head>
         <meta charset="utf-8">
         <title>ホーム画面</title>
         <style>
+            @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap');
+
             body {
-                font-family: Arial, sans-serif;
+                font-family: 'Noto Sans JP', sans-serif;
                 margin: 0;
                 padding: 0;
                 overflow-x: hidden; /* 横スクロールバーを隠す */
@@ -32,13 +35,13 @@
             }
             .sidebar {
                 height: 100%;
-                width: 0;
+                width: 250px; /* 固定幅に変更 */
                 position: fixed;
                 top: 0;
-                left: 0;
+                left: -250px; /* 初期状態でサイドバーを隠す */
                 background-color: #333;
                 overflow-x: hidden;
-                transition: 0.5s;
+                transition: left 0.5s; /* left位置の変化のみをアニメーション */
                 padding-top: 60px;
                 z-index: 1;
             }
@@ -51,7 +54,7 @@
                 font-size: 22px;
                 color: #818181;
                 display: block;
-                transition: 0.3s;
+                transition: color 0.3s; /* colorの変化のみをアニメーション */
             }
             .sidebar a:hover {
                 color: #f1f1f1;
@@ -107,10 +110,10 @@
         <div class="sidebar" id="mySidebar">
             <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
             <h1>マイページ</h1>
-        <a href="shop_buy.jsp">アイテム販売</a>
-        <a href="shop_sell.jsp">アイテム購入</a>
-        <a href="use_item.jsp">所持アイテム</a>
-        <a href="user_login.jsp">ログアウト</a>
+            <a href="shop_buy.jsp">アイテム販売</a>
+            <a href="shop_sell.jsp">アイテム購入</a>
+            <a href="use_item.jsp">所持アイテム</a>
+            <a href="user_login.jsp">ログアウト</a>
         </div>
 
         <div class="main-content">
@@ -121,7 +124,7 @@
                 <div class="mypage-icon" onclick="openNav()">☰</div>
             </header>
             <div class="container">
-                <h2>ようこそ、 <%= session.getAttribute("UID")%>さん！</h2>
+                <h2>ようこそ、 <%= session.getAttribute("UName")%>さん！</h2>
                 <p>ここはホームページのメインコンテンツです。</p>
             </div>
             <div class="container">
@@ -140,7 +143,7 @@
                         <p>アイテムを購入しましょう。</p>
                     </div>
                     <div class="grid-item">
-                        <a href="ranking.jsp" class="button">ランキング</a>
+                        <a href="RankingServlet" class="button">ランキング</a>
                         <p>自分のランキングを確認してみよう！</p>
                     </div>
                 </div>
@@ -149,12 +152,12 @@
 
         <script>
             function openNav() {
-                document.getElementById("mySidebar").style.width = "250px";
+                document.getElementById("mySidebar").style.left = "0";
                 document.querySelector(".main-content").style.marginLeft = "250px";
             }
 
             function closeNav() {
-                document.getElementById("mySidebar").style.width = "0";
+                document.getElementById("mySidebar").style.left = "-250px";
                 document.querySelector(".main-content").style.marginLeft = "0";
             }
         </script>

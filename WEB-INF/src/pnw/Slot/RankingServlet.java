@@ -16,13 +16,13 @@ import pnw.common.PnwDB;
 
 import javax.servlet.RequestDispatcher;
 
-@WebServlet("/Slot/SlotServlet")
-public class SlotServlet extends HttpServlet {
+@WebServlet("/Slot/RankingServlet")
+public class RankingServlet extends HttpServlet {
 
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public SlotServlet() {
+    public RankingServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -34,7 +34,7 @@ public class SlotServlet extends HttpServlet {
         response.setContentType("text/html; charset=UTF-8");
 
         ResultSet rs;
-        String forwardURL = "/Slot/slot.jsp";
+        String forwardURL = "/Slot/ranking.jsp";
         /**
          * Point: リクエストからセッションを取得するように埋めて下さい．
          */
@@ -50,7 +50,7 @@ public class SlotServlet extends HttpServlet {
             try {
                 PnwDB db = new PnwDB("2024e");
                 	
-                String sql = "SELECT * FROM user_management;";
+                String sql = "SELECT * FROM user_management ORDER BY point DESC LIMIT 5;";
                 PreparedStatement stmt = db.getStmt(sql);
 
                 // 実行結果取得
@@ -99,3 +99,6 @@ public class SlotServlet extends HttpServlet {
     }
 
 }
+
+
+

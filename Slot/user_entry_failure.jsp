@@ -52,7 +52,7 @@
         <div class="error-container">
             <h2>登録失敗</h2>
             <p>入力が違います、もう一度やり直してください。</p>
-            <form action="user_entry.jsp" method="get">
+            <form action="user_entry.jsp" method="post">
                 <button type="submit">新規登録画面に戻る</button>
             </form>
             <form action="user_login.jsp" method="get">

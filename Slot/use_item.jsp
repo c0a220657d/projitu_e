@@ -42,14 +42,14 @@
             width: 100px;
             text-align: center;
             padding: 10px;
-            background-color: #007bff;
+            background-color: #4CAF50;
             color: #fff;
             text-decoration: none;
             margin: 20px auto;
             border-radius: 5px;
         }
         a:hover {
-            background-color: #0056b3;
+            background-color: #4CAF50;
         }
     </style>
 </head>
@@ -81,6 +81,6 @@
         </tbody>
     </table>
     
-    <a href="home.jsp">ホームへ戻る</a>
+    <a href="home.jsp">Home</a>
 </body>
 </html>

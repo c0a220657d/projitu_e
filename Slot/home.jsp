@@ -125,6 +125,7 @@
             </header>
             <div class="container">
                 <h2>ようこそ、 <%= session.getAttribute("UName")%>さん！</h2>
+                <h2>所持ポイント <%= session.getAttribute("Point")%></h2>
                 <p>ここはホームページのメインコンテンツです。</p>
             </div>
             <div class="container">

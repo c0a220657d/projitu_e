@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<%@ page contentType="text/html; charset=UTF-8" %>
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
@@ -64,8 +65,8 @@
 <body>
 <div class="container">
     <h2>Capsule-Toy</h2>
-    <p>Your credits: <span id="credit">100</span></p>
-    <p>You need 10 credits to spin the Gacha Gacha.</p>
+    <p>あなたのポイント: <span id="credit"><%= session.getAttribute("Point")%></span></p>
+    <p>ガチャ1回につき、10ポイント消費します。</p>
     <img src="./images/gachagacha.png" alt="Gacha Machine"><br>
     <button onclick="playGacha()">Spin the Gacha</button>
     <div class="output" id="randomNumber"></div>
@@ -151,7 +152,9 @@ function updateRarityCount() {
 }
 </script>
 
-<a href="home.jsp">Home</a>
+
+<a href="UpdatePointsServlet" class="a">Home</a>
+
 
 </body>
 </html>

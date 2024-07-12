@@ -7,6 +7,8 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 
 public class PnwDB {
+
+    
     /**
      * DB接続オブジェクト
      */

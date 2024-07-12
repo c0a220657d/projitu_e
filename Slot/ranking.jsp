@@ -54,36 +54,59 @@
     </style>
 </head>
 <body>
-    <h1>あなたの得点: 1000</h1>
+    <h1>あなたの得点: <%= session.getAttribute("Point")%>点</h1>
     
-    <h2>ランキング</h2>
+    <!-- <h2>ランキング</h2> -->
     <table border="1">
         <tr>
-            <td> 順位 </td>
-            <td>UserID</td>
+            <td>順位</td>
+            <td>User Name</td>
             <td>Point</td>
         </tr>
         <%
         ArrayList<UserPointBean> list = (ArrayList<UserPointBean>)session.getAttribute("userlist");
+        String currentUser = (String) session.getAttribute("username"); // Assume username is stored in session
+        int userRank = -1;
+        int userPoint = -1;
         Iterator<UserPointBean> ite = list.iterator();
         int num = 1 ;
-        //結果の表示
-        while(ite.hasNext()){
+        while(ite.hasNext() && num <= 10){
             UserPointBean bean = ite.next();
+            if(bean.getID().equals(currentUser)){
+                userRank = num;
+                userPoint = bean.getpoint();
+            }
         %>
-        <%-- HTML内にJSPコードをスクリプト式として埋め込む--%>
             <tr>
-            <td><%=num %></td>
-            <td><%=bean.getID()%></td>
-            <td><%=bean.getpoint()%></td>
+                <td><%=num %></td>
+                <td><%=bean.getID()%></td>
+                <td><%=bean.getpoint()%></td>
             </tr>
         <%
-        num += 1; 
+            num += 1; 
         }
         %>
-        </table>
+    </table>
+
+    <%
+    // Display user's rank if not in top 10
+    if(userRank == -1){
+        ite = list.iterator();
+        num = 1;
+        while(ite.hasNext()){
+            UserPointBean bean = ite.next();
+            if(bean.getID().equals(currentUser)){
+                userRank = num;
+                userPoint = bean.getpoint();
+                break;
+            }
+            num += 1;
+        }
+    }
+    %>
+    <!-- <h2>あなたの順位: <%=userRank %> 位</h2>
+    <h2>あなたの得点: <%=userPoint %> 点</h2> -->
     
     <a href="home.jsp">home</a>
 </body>
 </html>
-

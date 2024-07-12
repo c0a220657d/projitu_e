@@ -1,147 +1,166 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <title>スロットマシン</title>
-    <style>
-        .slot-machine {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-top: 50px;
-        }
-        .slot {
-            margin: 0 10px;
-        }
-        .controls {
-            text-align: center;
-            margin-top: 20px;
-        }
-        .control {
-            margin: 0 10px;
-        }
-        a {
-            display: block;
-            width: 100px;
-            text-align: center;
-            padding: 10px;
-            background-color: #4CAF50;
-            color: #fff;
-            text-decoration: none;
-            margin: 20px auto;
-            border-radius: 5px;
-        }
-        a:hover {
-            background-color: #4CAF50;
-        }
-    </style>
-    <script>
-        let slots = [];
-        let intervals = [];
-        let numbers = [1, 1, 1];
-        let move = [false, false, false];
-        let speeds = [100, 50, 25]; // 回転速度の設定 (ms)
+<%@ page contentType="text/html; charset=UTF-8" %>
+<%@ page import="java.util.*, pnw.Slot.*"%>
+<html lang="ja">
+    <head>
+        <meta charset="utf-8">
+        <title>ホーム画面</title>
+        <style>
+            @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap');
 
-        function updateMoney() {
-            document.getElementById('money').innerText = money;
-        }
-
-        function incrementNumber(index) {
-            numbers[index]++;
-            if (numbers[index] > 9) {
-                numbers[index] = 1;
+            body {
+                font-family: 'Noto Sans JP', sans-serif;
+                margin: 0;
+                padding: 0;
+                overflow-x: hidden; /* 横スクロールバーを隠す */
             }
-            slots[index].src = 'images/' + numbers[index] + '.png';
-        }
-
-        function startSlot(index) {
-            intervals[index] = setInterval(() => {
-                incrementNumber(index);
-            }, speeds[0]); // 最初は最も遅い速度で設定
-        }
-
-        function stopSlot(index) {
-            clearInterval(intervals[index]);
-            move[index] = false;
-            if (!move[0] && !move[1] && !move[2]) {
-                checkMatch();
+            .container {
+                width: 80%;
+                margin: auto;
+                padding: 20px;
+                background-color: #fff;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             }
-        }
+            header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                background-color: #4CAF50;
+                color: white;
+                padding: 10px 20px;
+            }
+            .mypage-icon {
+                cursor: pointer;
+                font-size: 24px;
+            }
+            .sidebar {
+                height: 100%;
+                width: 250px; /* 固定幅に変更 */
+                position: fixed;
+                top: 0;
+                left: -250px; /* 初期状態でサイドバーを隠す */
+                background-color: #333;
+                overflow-x: hidden;
+                transition: left 0.5s; /* left位置の変化のみをアニメーション */
+                padding-top: 60px;
+                z-index: 1;
+            }
+            .sidebar h1 {
+                color: white; 
+            }
+            .sidebar a {
+                padding: 10px 15px;
+                text-decoration: none;
+                font-size: 22px;
+                color: #818181;
+                display: block;
+                transition: color 0.3s; /* colorの変化のみをアニメーション */
+            }
+            .sidebar a:hover {
+                color: #f1f1f1;
+            }
+            .closebtn {
+                position: absolute;
+                top: 20px;
+                right: 25px;
+                font-size: 36px;
+                margin-left: 50px;
+            }
+            .main-content {
+                transition: margin-left 0.5s;
+                padding: 16px;
+            }
+            .button {
+                display: block;
+                width: 200px;
+                padding: 10px;
+                margin: 10px auto;
+                background-color: #4CAF50;
+                color: white;
+                text-align: center;
+                text-decoration: none;
+                border-radius: 5px;
+                transition: background-color 0.3s ease;
+            }
+            .button:hover {
+                background-color: #45a049;
+            }
+            .grid-container {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                grid-template-rows: 1fr 1fr;
+                gap: 20px;
+                height: 60vh;
+                margin: 20px 0;
+            }
+            .grid-item {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                border: 1px solid #ddd;
+                border-radius: 5px;
+                padding: 20px;
+                background-color: #f9f9f9;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            }
+        </style>
+    </head>
+    <body>
+        <div class="sidebar" id="mySidebar">
+            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+            <h1>マイページ</h1>
+            <a href="shop_buy.jsp">アイテム販売</a>
+            <a href="shop_sell.jsp">アイテム購入</a>
+            <a href="use_item.jsp">所持アイテム</a>
+            <a href="user_login.jsp">ログアウト</a>
+        </div>
 
-        function checkMatch() {
-            if (numbers[0] === numbers[1] || numbers[1] === numbers[2] || numbers[0] === numbers[2]) {
-                money += 20;
-            }
-            if (numbers[0] === numbers[1] && numbers[1] === numbers[2]) {
-                money += 180;
-            }
-            updateMoney();
-        }
+        <div class="main-content">
+            <header>
+                <div class="logo">
+                    <h1>ホームページ</h1>
+                </div>
+                <div class="mypage-icon" onclick="openNav()">☰</div>
+            </header>
+            <div class="container">
+                <h2>ようこそ、 <%= session.getAttribute("UName")%>さん！</h2>
+                <h2>ようこそ、 <%= session.getAttribute("User_ID")%>さん！</h2>
+                <p>ここはホームページのメインコンテンツです。</p>
+            </div>
+            <div class="container">
+                <h1>ホーム画面</h1>
+                <div class="grid-container">
+                    <div class="grid-item">
+                        <a href="slot.jsp" class="button">スロット</a>
+                        <p>運を試してみよう！</p>
+                    </div>
+                    <div class="grid-item">
+                        <a href="gacha.jsp" class="button">ガチャ</a>
+                        <p>素敵なアイテムをゲット！</p>
+                    </div>
+                    <div class="grid-item">
+                        <a href="ShopListShowServlet" class="button">ショップ</a>
+                        <p>アイテムを購入しましょう。</p>
+                    </div>
+                    <div class="grid-item">
+                        <a href="RankingServlet" class="button">ランキング</a>
+                        <p>自分のランキングを確認してみよう！</p>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-        function startSlots() {
-            if (!move[0] && !move[1] && !move[2]){
-                if (money >= 20) {
-                    money -= 20;
-                    updateMoney();
-                    for (let i = 0; i < 3; i++) {
-                        startSlot(i);
-                        move[i] = true;
-                    }
-                } else {
-                    alert("所持金が足りません。");
-                }
-            }else {
-                alert("すべてのスロットを止めてください。");
+        <script>
+            function openNav() {
+                document.getElementById("mySidebar").style.left = "0";
+                document.querySelector(".main-content").style.marginLeft = "250px";
             }
-        }
 
-        function stopSlots() {
-            for (let i = 0; i < 3; i++) {
-                if (move[i]) {
-                    stopSlot(i);
-                }
+            function closeNav() {
+                document.getElementById("mySidebar").style.left = "-250px";
+                document.querySelector(".main-content").style.marginLeft = "0";
             }
-        }
-
-        function changeSpeed(speedIndex) {
-            for (let i = 0; i < 3; i++) {
-                clearInterval(intervals[i]);
-                intervals[i] = null;
-                move[i] = false;
-                startSlot(i);
-            }
-            speeds[0] = speedIndex === 0 ? 100 : (speedIndex === 1 ? 50 : 25);
-        }
-
-        window.onload = function() {
-            for (let i = 0; i < 3; i++) {
-                slots[i] = document.getElementById('slot' + i);
-            }
-            updateMoney();
-        }
-    </script>
-</head>
-<body>
-    <h1 style="text-align: center;">スロットマシン</h1>
-    <div style="text-align: center;">
-        <p>所持金: <span id="money">200</span></p>
-    </div>
-    <div class="slot-machine">
-        <img id="slot0" class="slot" src="images/1.png" alt="slot">
-        <img id="slot1" class="slot" src="images/1.png" alt="slot">
-        <img id="slot2" class="slot" src="images/1.png" alt="slot">
-    </div>
-    <div class="controls">
-        <button class="control" onclick="startSlots()">スタート</button>
-        <button class="control" onclick="stopSlot(0)">ストップ1</button>
-        <button class="control" onclick="stopSlot(1)">ストップ2</button>
-        <button class="control" onclick="stopSlot(2)">ストップ3</button>
-        <br>
-        <button class="control" onclick="changeSpeed(0)">速度1</button>
-        <button class="control" onclick="changeSpeed(1)">速度2</button>
-        <button class="control" onclick="changeSpeed(2)">速度3</button>
-    </div>
-    <a href="home.jsp">Home</a>
-</body>
+        </script>
+    </body>
 </html>

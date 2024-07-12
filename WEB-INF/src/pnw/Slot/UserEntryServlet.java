@@ -52,8 +52,8 @@ public class UserEntryServlet extends HttpServlet {
             int result = pstmt.executeUpdate();
             if (result > 0) {
                 //response.sendRedirect("user_login.jsp"); // 登録成功後のリダイレクト先
-                session.setAttribute("UName",userName);
-                request.getRequestDispatcher("home.jsp").forward(request, response);
+                //session.setAttribute("UName",userName);
+                request.getRequestDispatcher("user_login.jsp").forward(request, response);
             } else {
                 //response.sendRedirect("user_entry_failure.jsp"); // 登録失敗後のリダイレクト先
                 request.getRequestDispatcher("user_entry_failure.jsp").forward(request, response);

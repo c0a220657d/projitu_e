@@ -10,16 +10,15 @@
 <h1>shop</h1>
 <table border="1">
 <tr>
-    <td>UserID</td>
-    <td>ItemID</td>
-    <td>ItemPrice</td>
-    <td>ItemName</td>
+    <td>商品ID</td>
+    <td>アイテム名</td>
+    <td>価格</td>
 </tr>
 <%
 ArrayList<ShopInfoBean> list = (ArrayList<ShopInfoBean>)request.getAttribute("shoplist");
 Iterator<ShopInfoBean> ite = list.iterator();
 %>
-<h1><%=list.get(0)%></h1>
+<h1>所持ポイント<%=session.getAttribute("Point")%></h1>
 //結果の表示
 <%
 while(ite.hasNext()){
@@ -27,8 +26,7 @@ while(ite.hasNext()){
     ShopInfoBean bean = ite.next();
 %>
     <tr>
-    <td><%=bean.getUserID()%></td>
-    <td><%=bean.getItemID()%></td>
+    <td><%=bean.getGoodsID()%></td>
     <td><%=bean.getItemPrice()%></td>
     <td><%=bean.getItemName()%></td>
     </tr>
@@ -37,16 +35,11 @@ while(ite.hasNext()){
 %>
 </table>
 <hr/>
-追加の場合は,IDは自動設定されるので指定しないでください．
-更新と削除は，ID指定が必須．
-<!-- <form action="./ShopListProcessServlet" method="post">
-ID: <input type="text" name="id"><br>
-ユーザ名：<input type="text" name="userid" ><br>
-パスワード：<input type="password" name="pass" ><br>
-<input type="submit" name="btn" value="追加">
-<input type="submit" name="btn" value="更新">
-<input type="submit" name="btn" value="削除">
-</form> -->
+<form action="ShopListShowServlet" method="get">
+<input type="number" name="id" placeholder="商品ID" required>
+<input type="submit" name="btn" value="購入">
+</form>
+<a><%=session.getAttribute("shop_buy_text")%></a>
 <a href="home.jsp">戻る</a>
 </body>
 </html>

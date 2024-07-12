@@ -41,15 +41,12 @@ public class ShopListShowServlet extends HttpServlet {
         ResultSet rs;
         ResultSet item_rs;
         String forwardURL = "/Slot/shop_buy.jsp";
-        /**
-         * Point: リクエストからセッションを取得するように埋めて下さい．
-         */
-        //HttpSession session = request.getSession();
-        /**
-         * Point: セッションにもしuserlistというキーに対応する値があれば，という条件を書いて下さい． ヒント:
-         * userlistというキーで値を取得しようとしたが（sessionのメソッドを使う），それがnullでないならば
-         */
-
+        String btn_val = request.getParameter("btn");
+        if(btn_val == null){
+            btn_val = "";
+        }
+        HttpSession session = request.getSession();
+        session.setAttribute("shop_buy_text", "");
         try {
             /**
              * Point: PnwDBをインスタンス化して，かつtestdbに接続する ようにして下さい．また，必要に応じて上にあるimport文で
@@ -61,6 +58,33 @@ public class ShopListShowServlet extends HttpServlet {
             String item_sql = "SELECT item_name FROM item_db WHERE item_id = ?";
             PreparedStatement stmt = db.getStmt(sql);
             PreparedStatement item_stmt = db.getStmt(item_sql);
+            int gID = 0;
+            switch (btn_val) {
+                case "購入":
+                    gID = Integer.parseInt(request.getParameter("id"));
+                    String check_sql = "SELECT * FROM shop_db WHERE goods_id = ?";
+                    PreparedStatement check_stmt = db.getStmt(check_sql);
+                    check_stmt.setInt(1,gID);
+                    ResultSet check_rs = check_stmt.executeQuery();
+                    while (check_rs.next()) {
+                         int iPrice = check_rs.getInt("item_price");
+                         Object aaa = session.getAttribute("Point");
+                         int uPoint = Integer.parseInt(aaa.toString());
+                        if(iPrice <= uPoint){
+                            String buy_sql = "DELETE FROM shop_db WHERE goods_id = ?";
+                            PreparedStatement buy_stmt = db.getStmt(buy_sql);
+                            buy_stmt.setInt(1,gID);
+                            buy_stmt.executeUpdate();
+                            session.setAttribute("Point", uPoint-iPrice);
+                            session.setAttribute("shop_buy_text", "購入に成功しました");
+                        }else{
+                             session.setAttribute("shop_buy_text","ポイントが不足しています");
+                        }
+                        break;
+                    }
+                    break;
+                
+            }
 
             // 実行結果取得
             rs = stmt.executeQuery();
@@ -73,16 +97,11 @@ public class ShopListShowServlet extends HttpServlet {
                 int itemid = rs.getInt("item_id");
                 int itemprice = rs.getInt("item_price");
                 int goodsid = rs.getInt("goods_id");
-                // beanを生成
                 ShopInfoBean bean = new ShopInfoBean(id,itemid,itemprice,goodsid);
-                //item_rs = item_stmt.executeQuery(item_sql);
-                //System.out.println("aaaaaaaaaaaaaaa");
-                // bean.setID(id);
-                // Listへbeanを追加する．
                 infoArray.add(bean);
-                // 見つかった
                 cnt++;
             }
+
             for (ShopInfoBean info : infoArray) {
                 item_stmt.setInt(1,info.getItemID());
                 System.out.println(info.getItemID());
@@ -97,8 +116,10 @@ public class ShopListShowServlet extends HttpServlet {
              * Point: sessionへ，userlistという名前でinfoArrayをセットしてください．
              */
             request.setAttribute("shoplist", infoArray);
+        
         } catch (Exception e) {
             e.printStackTrace();
+            request.getRequestDispatcher("name_overlap.jsp").forward(request, response);
         }finally{
             System.out.println();
         }
@@ -106,7 +127,6 @@ public class ShopListShowServlet extends HttpServlet {
         RequestDispatcher dispatcher = request.getRequestDispatcher(forwardURL);
         // 外部ファイルに表示処理を任せる
         dispatcher.forward(request, response);
-        System.out.println("World!");
     }
 
     /**

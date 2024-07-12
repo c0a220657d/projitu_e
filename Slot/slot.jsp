@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.util.*, pnw.Slot.*"%>
 <!DOCTYPE html>
 <html>
@@ -42,7 +41,8 @@
         let slots = [];
         let intervals = [];
         let numbers = [1, 1, 1];
-        let money = 200;
+        let money = parseInt('<%= session.getAttribute("Point") %>'); // 資産を取得して整数に変換
+
         let move = [false, false, false];
 
         function updateMoney() {
@@ -93,7 +93,7 @@
                 } else {
                     alert("所持金が足りません。");
                 }
-            }else {
+            } else {
                 alert("すべてのスロットを止めてください。");
             }
         }
@@ -117,7 +117,7 @@
 <body>
     <h1 style="text-align: center;">スロットマシン</h1>
     <div style="text-align: center;">
-        <p>所持金: <span id="money">200</span></p>
+        <p>所持金: <span id="money"><%= session.getAttribute("Point") %></span></p>
     </div>
     <div class="slot-machine">
         <img id="slot0" class="slot" src="images/1.png" alt="slot">
@@ -130,16 +130,6 @@
         <button class="control" onclick="stopSlot(1)">ストップ2</button>
         <button class="control" onclick="stopSlot(2)">ストップ3</button>
     </div>
-    <a href="home.jsp">Home</a>
+    <a href="UpdatePointsServlet">Home</a>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-

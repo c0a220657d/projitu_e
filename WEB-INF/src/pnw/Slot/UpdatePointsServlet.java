@@ -12,17 +12,21 @@ import javax.servlet.http.HttpSession;
 import pnw.common.PnwDB;
 import javax.servlet.RequestDispatcher;
 
-@WebServlet("/UpdatePointsServlet")
+@WebServlet("/Slot/UpdatePointsServlet")
 public class UpdatePointsServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
         // Fetch current points from session
+        String pnt = request.getParameter("point");
         int currentPoints = (int) session.getAttribute("Point");
-        int user_id = (int)session.getAttribute("UserID");
+        if(pnt != null){
+            currentPoints = Integer.parseInt(pnt);
+        }
+        int user_id = (int)session.getAttribute("User_ID");
 
         try{
             PnwDB db = new PnwDB("2024e");
-            String sql = "UPDATE user_management SET point=?, WHERE user_id=?";
+            String sql = "UPDATE user_management SET point=? WHERE user_id=?";
             PreparedStatement stmt = db.getStmt(sql);
             stmt.setInt(1, currentPoints);
             stmt.setInt(2, user_id);

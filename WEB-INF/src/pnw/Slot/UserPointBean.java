@@ -1,6 +1,8 @@
 package pnw.Slot;
 
-public class UserPointBean {
+import java.io.Serializable;
+
+public class UserPointBean implements Serializable{
 
     /**
      * 主キー

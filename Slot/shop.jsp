@@ -48,6 +48,6 @@ ID: <input type="text" name="id"><br>
 <input type="submit" name="btn" value="更新">
 <input type="submit" name="btn" value="削除">
 </form> -->
-<a href="home.jsp">戻る</a>
+<a href="UpdatePointsServlet">戻る</a>
 </body>
 </html>

@@ -37,16 +37,21 @@
             background-color: #4CAF50;
         }
     </style>
+    <form name = Form1 action="UpdatePointsServlet" method="get">
+        <input type="hidden" name = point id = "pnt" value="">
+    </form>
     <script>
         let slots = [];
         let intervals = [];
         let numbers = [1, 1, 1];
         let money = parseInt('<%= session.getAttribute("Point") %>'); // 資産を取得して整数に変換
+        let cmoney = 0;
 
         let move = [false, false, false];
 
         function updateMoney() {
             document.getElementById('money').innerText = money;
+            document.getElementById( "pnt" ).value = money;
         }
 
         function incrementNumber(index) {
@@ -130,6 +135,7 @@
         <button class="control" onclick="stopSlot(1)">ストップ2</button>
         <button class="control" onclick="stopSlot(2)">ストップ3</button>
     </div>
-    <a href="UpdatePointsServlet">Home</a>
+    <a href="javascript:document.Form1.submit()">Home</a>
+    
 </body>
 </html>

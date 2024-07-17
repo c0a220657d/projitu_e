@@ -19,7 +19,6 @@ ArrayList<ShopInfoBean> list = (ArrayList<ShopInfoBean>)request.getAttribute("sh
 Iterator<ShopInfoBean> ite = list.iterator();
 %>
 <h1>所持ポイント<%=session.getAttribute("Point")%></h1>
-//結果の表示
 <%
 while(ite.hasNext()){
     //Point: Iteratorの次の要素をbeanへ格納させてください．
@@ -40,6 +39,6 @@ while(ite.hasNext()){
 <input type="submit" name="btn" value="購入">
 </form>
 <a><%=session.getAttribute("shop_buy_text")%></a>
-<a href="home.jsp">戻る</a>
+<a href="UpdatePointsServlet">戻る</a>
 </body>
 </html>

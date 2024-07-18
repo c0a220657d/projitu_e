@@ -46,7 +46,7 @@ public class LoginServlet extends HttpServlet {
 
         try {
             PnwDB db = new PnwDB("2024e");
-            String sql = "SELECT user_name, password,user_id,point FROM user_management WHERE user_name=?";
+            String sql = "SELECT * FROM user_management WHERE user_name=?";
             PreparedStatement stmt = db.getStmt(sql);
             stmt.setString(1, User_name);
             // 実行結果取得
@@ -55,10 +55,20 @@ public class LoginServlet extends HttpServlet {
             if (rs.next()) {
                 String dbPassword = rs.getString("password");
                 if (password.equals(dbPassword)) {
+                    int uid = rs.getInt("user_id");
 					session.setAttribute("UName", rs.getString("user_name"));
-                    session.setAttribute("User_ID", rs.getInt("user_id"));
+                    session.setAttribute("User_ID", uid);
                     session.setAttribute("Point", rs.getInt("point"));
-                    forwardURL = "home.jsp"; // ログイン成功後のページ
+                    int logcnt = rs.getInt("login_count");
+                    if(logcnt == 0){
+                        String logsql = "INSERT INTO user_item_db (user_id) VALUES (?)";
+                        PreparedStatement logstmt = db.getStmt(logsql);
+                        logstmt.setInt(1,uid);
+                        int logrs = logstmt.executeUpdate();
+                    }
+                    logcnt ++;
+                    session.setAttribute("logcnt",logcnt);
+                    forwardURL = "UpdatePointsServlet"; // ログイン成功後のページ
                 } else {
                     forwardURL = "user_entry_failure.jsp"; // パスワードが間違っている場合のページ
                 }

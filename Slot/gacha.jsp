@@ -62,6 +62,12 @@
         }
     </style>
 </head>
+<form name = Form2 action="UpdatePointsServlet" method="get">
+    <input type="hidden" name = normal id = "n" value="">
+    <input type="hidden" name = rare id = "r" value="">
+    <input type="hidden" name = srare id = "sr" value="">
+    <input type="hidden" name = point id = "pnt" value="">
+</form>
 <body>
 <div class="container">
     <h2>Capsule-Toy</h2>
@@ -97,6 +103,7 @@ function playGacha() {
     if (currentCredit >= 10) {
         const newCredit = currentCredit - 10;
         creditElement.textContent = newCredit;
+        document.getElementById( "pnt" ).value = newCredit;
 
         let randomNumber = Math.floor(Math.random() * 100) + 1;
 
@@ -149,11 +156,14 @@ function updateRarityCount() {
     document.getElementById("count3Stars").textContent = count3Stars;
     document.getElementById("count2Stars").textContent = count2Stars;
     document.getElementById("count1Star").textContent = count1Star;
+    document.getElementById( "n" ).value = count1Star;
+    document.getElementById( "r" ).value = count2Stars;
+    document.getElementById( "sr" ).value = count3Stars;
 }
 </script>
 
 
-<a href="UpdatePointsServlet" class="a">Home</a>
+<a href="javascript:document.Form2.submit()" class="a">Home</a>
 
 
 </body>

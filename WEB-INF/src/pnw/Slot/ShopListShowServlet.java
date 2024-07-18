@@ -70,6 +70,7 @@ public class ShopListShowServlet extends HttpServlet {
                          int iPrice = check_rs.getInt("item_price");
                          Object aaa = session.getAttribute("Point");
                          int uPoint = Integer.parseInt(aaa.toString());
+                         int howrare = check_rs.getInt("item_id");
                         if(iPrice <= uPoint){
                             String buy_sql = "DELETE FROM shop_db WHERE goods_id = ?";
                             PreparedStatement buy_stmt = db.getStmt(buy_sql);
@@ -77,6 +78,21 @@ public class ShopListShowServlet extends HttpServlet {
                             buy_stmt.executeUpdate();
                             session.setAttribute("Point", uPoint-iPrice);
                             session.setAttribute("shop_buy_text", "購入に成功しました");
+                            String add_sql = "";
+                            switch (howrare) {
+                                case 0:
+                                    add_sql = "UPDATE user_item_db SET have_normal = have_normal+1 WHERE user_id = ?";
+                                    break;
+                                case 1:
+                                    add_sql = "UPDATE user_item_db SET have_rare = have_rare+1 WHERE user_id = ?";
+                                    break;
+                                case 2:
+                                    add_sql = "UPDATE user_item_db SET have_super_rare = have_super_rare+1 WHERE user_id = ?";
+                                    break;
+                            }
+                            PreparedStatement add_stmt = db.getStmt(add_sql);
+                            add_stmt.setInt(1,(int)session.getAttribute("User_ID"));
+                            int add1 = add_stmt.executeUpdate();
                         }else{
                              session.setAttribute("shop_buy_text","ポイントが不足しています");
                         }

@@ -110,9 +110,9 @@
         <div class="sidebar" id="mySidebar">
             <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
             <h1>マイページ</h1>
-            <a href="shop_buy.jsp">アイテム販売</a>
-            <a href="shop_sell.jsp">アイテム購入</a>
-            <a href="use_item.jsp">所持アイテム</a>
+            <a>アイテム販売(工事中)</a>
+            <a>アイテム購入(工事中)</a>
+            <a href="HaveItemServlet">所持アイテム</a>
             <a href="user_login.jsp">ログアウト</a>
         </div>
 

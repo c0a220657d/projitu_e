@@ -30,7 +30,7 @@ public class RankingServlet extends HttpServlet {
         ResultSet rs;
         String forwardURL = "/Slot/ranking.jsp";
         HttpSession session = request.getSession();
-        if (session.getAttribute("userlist") == null) {
+        //if (session.getAttribute("userlist") == null) {
             try {
                 PnwDB db = new PnwDB("2024e");
                 String sql = "SELECT * FROM user_management ORDER BY point DESC;";
@@ -50,7 +50,7 @@ public class RankingServlet extends HttpServlet {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        }
+        //}
 
         RequestDispatcher dispatcher = request.getRequestDispatcher(forwardURL);
         dispatcher.forward(request, response);

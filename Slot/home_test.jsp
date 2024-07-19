@@ -83,7 +83,7 @@
                 transition: background-color 0.3s ease;
             }
             .button:hover {
-                background-color: #45a049;
+                background-color: #4CAF50;
             }
             .grid-container {
                 display: grid;

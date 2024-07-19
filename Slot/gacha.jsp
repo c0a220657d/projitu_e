@@ -51,14 +51,14 @@
             width: 100px;
             text-align: center;
             padding: 10px;
-            background-color: #4CAF50;
+            background-color: #ec4d53;
             color: #fff;
             text-decoration: none;
             margin: 20px auto;
             border-radius: 5px;
         }
         a:hover {
-            background-color: #4CAF50;
+            background-color: #ec4d53;
         }
     </style>
 </head>

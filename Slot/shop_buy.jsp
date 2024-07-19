@@ -26,8 +26,8 @@ while(ite.hasNext()){
 %>
     <tr>
     <td><%=bean.getGoodsID()%></td>
-    <td><%=bean.getItemPrice()%></td>
     <td><%=bean.getItemName()%></td>
+    <td><%=bean.getItemPrice()%></td>
     </tr>
 <%
 }

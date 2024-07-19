@@ -63,10 +63,10 @@
     </style>
 </head>
 <form name = Form2 action="UpdatePointsServlet" method="get">
-    <input type="hidden" name = normal id = "n" value="">
-    <input type="hidden" name = rare id = "r" value="">
-    <input type="hidden" name = srare id = "sr" value="">
-    <input type="hidden" name = point id = "pnt" value="">
+    <input type="hidden" name = normal id = "n" value=0>
+    <input type="hidden" name = rare id = "r" value=0>
+    <input type="hidden" name = srare id = "sr" value=0>
+    <input type="hidden" name = point id = "pnt" value="<%= session.getAttribute("Point")%>">
 </form>
 <body>
 <div class="container">

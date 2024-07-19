@@ -44,7 +44,7 @@ public class UpdatePointsServlet extends HttpServlet {
             stmt.setInt(2,(int)session.getAttribute("logcnt"));
             stmt.setInt(3, user_id);
             int ret2 = stmt.executeUpdate();
-            String itemsql = "UPDATE user_item_db SET have_normal=?,have_rare=?,have_super_rare=? WHERE user_id=?";
+            String itemsql = "UPDATE user_item_db SET have_normal=have_normal+?,have_rare=have_rare+?,have_super_rare=have_super_rare+? WHERE user_id=?";
             PreparedStatement itemstmt = db.getStmt(itemsql);
             for(int i=0;i<3;i++){
                 itemstmt.setInt(i+1,items.get(i));
